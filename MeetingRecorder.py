@@ -319,7 +319,7 @@ Built with ❤️ using GGML"""
             llm_template = LLAMA_MODELS[self.current_llm]["template"]
             
             # Step 1: Transcribe (use notification instead of direct UI update)
-            rumps.notification("Processing", "Step 1/3", "🎤 Transcribing audio...", sound=False)
+            rumps.notification("Processing", "Step 1/3", "🎤 Transcribing audio...", sound=True)
             transcript_path = self.current_session_dir / "transcript.txt"
             
             whisper_cmd = [
@@ -341,7 +341,7 @@ Built with ❤️ using GGML"""
                 transcript_path.write_text(transcript)
             
             # Step 2: Summarize (use notification - thread-safe)
-            rumps.notification("Processing", "Step 2/3", f"🧠 Summarizing with {self.current_llm.split('(')[0].strip()}...", sound=False)
+            rumps.notification("Processing", "Step 2/3", f"🧠 Summarizing with {self.current_llm.split('(')[0].strip()}...", sound=True)
             
             max_chars = 4000
             truncated = transcript[:max_chars] + "..." if len(transcript) > max_chars else transcript
@@ -355,24 +355,27 @@ Built with ❤️ using GGML"""
                 "-m", str(llm_model),
                 "-p", summary_prompt,
                 "-n", "400",
-                "--temp", "0.3"
+                "--temp", "0.3",
+                "--no-display-prompt",  # Don't echo the prompt
+                "-e"  # Enable escape sequences (prevents interactive mode)
             ]
             
-            result = subprocess.run(llama_cmd, capture_output=True, text=True)
+            # Use stdin to prevent interactive mode from waiting for input
+            result = subprocess.run(llama_cmd, capture_output=True, text=True, stdin=subprocess.DEVNULL)
             summary = self.clean_output(result.stdout, llm_template)
             
             summary_path = self.current_session_dir / "summary.txt"
             summary_path.write_text(summary)
             
             # Step 3: Extract action items (use notification - thread-safe)
-            rumps.notification("Processing", "Step 3/3", "✅ Extracting action items...", sound=False)
+            rumps.notification("Processing", "Step 3/3", "✅ Extracting action items...", sound=True)
             
             todo_system = "You are a helpful assistant that extracts action items from meetings."
             todo_user = f"Extract all action items as a numbered list. If none exist, say so.\n\n{truncated}"
             todo_prompt = get_prompt_template(llm_template, todo_system, todo_user)
             
             llama_cmd[3] = todo_prompt
-            result = subprocess.run(llama_cmd, capture_output=True, text=True)
+            result = subprocess.run(llama_cmd, capture_output=True, text=True, stdin=subprocess.DEVNULL)
             todos = self.clean_output(result.stdout, llm_template)
             
             todo_path = self.current_session_dir / "todos.txt"

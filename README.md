@@ -24,9 +24,11 @@ Built with [GGML](https://github.com/ggml-org/ggml), the tensor library that pow
 
 ---
 
-## 🖥️ Screenshot
+## 🖥️ Demo
 
-![Meeting Recorder Menu Bar](screenshots/ss_meeting_recorder.png)
+<video src="screenshots/app-recorder.mp4" controls width="400"></video>
+
+[▶️ Click here to watch the demo video](screenshots/app-recorder.mp4)
 
 ---
 
