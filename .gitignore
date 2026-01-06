@@ -1,0 +1,72 @@
+# GGML Meeting Recorder - Git Ignore
+
+# ==========================================
+# LARGE FILES - Users download via setup.sh
+# ==========================================
+
+# LLM Models (GGUF format) - 1.9GB to 40GB each
+models/*.gguf
+
+# Whisper models - up to 3GB each
+whisper.cpp/models/*.bin
+!whisper.cpp/models/for-tests-*
+
+# Keep the models directory structure
+!models/.gitkeep
+
+# ==========================================
+# BUILD ARTIFACTS - Generated locally
+# ==========================================
+
+# whisper.cpp and llama.cpp (cloned by setup.sh or symlinked)
+whisper.cpp/
+llama.cpp/
+llama.cpp
+
+# Build directories
+build/
+
+# ==========================================
+# PRIVATE DATA
+# ==========================================
+
+# User recordings (contains audio and transcripts)
+recordings/
+
+# Output files from CLI
+output/
+
+# ==========================================
+# PYTHON
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+*.egg-info/
+.eggs/
+dist/
+
+# ==========================================
+# OS & IDE
+# ==========================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# IDE
+.idea/
+.vscode/
+*.code-workspace
+*.swp
+*~
+
+# ==========================================
+# LOGS
+# ==========================================
+*.log

@@ -1,0 +1,16 @@
+# GGML Meeting Recorder - Python Dependencies
+# Install with: pip install -r requirements.txt
+
+# Menu bar app framework
+rumps>=0.4.0
+
+# Audio recording
+sounddevice>=0.4.6
+
+# Audio processing
+numpy>=1.24.0
+scipy>=1.10.0
+
+# Model downloading from Hugging Face
+huggingface-hub>=0.20.0
+
