@@ -26,9 +26,7 @@ Built with [GGML](https://github.com/ggml-org/ggml), the tensor library that pow
 
 ## 🖥️ Demo
 
-<video src="screenshots/app-recorder.mp4" controls width="400"></video>
-
-[▶️ Click here to watch the demo video](screenshots/app-recorder.mp4)
+![Demo](screenshots/demo.gif)
 
 ---
 
